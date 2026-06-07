@@ -1,18 +1,23 @@
 {% load static %}
-{% block %}
-<link rel="stylesheet" href="{% static 'deps/css/my_footer_css.css' %}">
-{% endblock css  %}
+<!DOCTYPE html>
+<html lang="en">
 
-{%  block content %}
-<h1 class="mt-5 pt-5"><strong>Магазин мебели HOME</strong></h1>
-{% endblock content%}
-{%  block footer %}
-    <footer class="py-4 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Home Python Hub Studio 2023</p>
-        </div>
-    </footer>
-{% endblock footer %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'deps/css/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'deps/css/my_css.css' %}">
+    {% block css %} {% endblock css %}
+
+
+    <link class="apple-touch-icon" sizes="180x180" href="{% static 'deps/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'deps/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'deps/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'deps/favicon/site.webmanifest' %}">
+
+    <title>Home</title>
+</head>
 
 <body>
     <header>
@@ -158,11 +163,12 @@
                 <div class="col-lg-2">
                     </div>
                 <div class="col-lg-10">
-
+                    {%  block content %} {% endblock content%}
                 </div>
             </div>
         </div>
     </section>
+      {%  block footer %} {% endblock footer %}
     <script src="{% static 'deps/js/jquery/jquery-3.7.0.min.js' %}"></script>
     <script src="{% static 'deps/js/jquery-events.js' %}"></script>
     <script src="{% static 'deps/js/jquery-ajax.js' %}"></script>
