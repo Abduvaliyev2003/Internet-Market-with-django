@@ -13,3 +13,14 @@ def index(request) -> HttpResponse:
         'content': 'Главная странница магазина - Home'
     }
     return render(request, 'main/index.html', context)
+
+
+def about(request) -> HttpResponse:
+    context: [str, str] = {
+        'title': 'Home - О нас  ',
+        'content': ' О нас ',
+        'text_on_page': 'Иван поступил правильно, когда открылся мальчику и помог ему с учебой.'
+    }
+    return render(request, 'main/about.html', context)
+
+
