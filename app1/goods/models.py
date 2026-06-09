@@ -9,6 +9,9 @@ class Categories(models.Model):
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
+    def __str__(self):
+        return self.name
+
 class Products(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='name')
     slug = models.SlugField(max_length=250, unique=True, blank=True, null=True, verbose_name='URl')
