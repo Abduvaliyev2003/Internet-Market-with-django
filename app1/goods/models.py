@@ -18,7 +18,7 @@ class Products(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name='description')
     image = models.ImageField(upload_to='goods_images', blank=True, null=True, verbose_name='image')
     price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2,  verbose_name='price')
-    discount = models.DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='discount')
+    discount = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='discount')
     quantity = models.PositiveIntegerField(default=0, verbose_name='quantity')
     category = models.ForeignKey(to=Categories, on_delete=models.CASCADE, verbose_name='category')
     class Meta:

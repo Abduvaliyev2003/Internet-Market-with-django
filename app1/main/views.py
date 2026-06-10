@@ -4,13 +4,17 @@ from multiprocessing import context
 from django.db.models.fields import return_None
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from goods.models import Categories
 # Create your views here.
 
 def index(request) -> HttpResponse:
+
+    categories = Categories.objects.all()
+
     context: [str, str] = {
         'title': 'Home',
-        'content': 'Главная странница магазина - Home'
+        'content': 'Главная странница магазина - Home',
+        'categories': categories,
     }
     return render(request, 'main/index.html', context)
 
