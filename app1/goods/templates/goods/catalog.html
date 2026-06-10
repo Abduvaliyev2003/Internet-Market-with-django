@@ -42,9 +42,13 @@
         {% for product in goods %}
  <div class="col-lg-4 col-md-6 p-4">
      <div class="card border-primary rounded custom-shadow">
-         <img src="{% static product.image %}" class="card-img-top" alt="{{ product.name }}">
+         {% if product.image %}
+         <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+         {% else %}
+            <img src="{% static "deps/images/Not found image.png" %}" class="card-img-top" alt="{{ product.name }}">
+         {% endif %}
          <div class="card-body">
-             <a href="{% url 'catalog:product' %}">
+             <a href="{% url 'catalog:product' product.slug %}">
                  <p class="card-title">{{ product.name }}</p>
              </a>
              <p class="card-text text-truncate">{{ product.description }}</p>
@@ -52,7 +56,7 @@
              <div class="d-flex justify-content-between">
                  {% if product.discount %}
                      <p><s>{{ product.price }}</s> $</p>
-                     <p><strong>{{ product.discount_price }} $</strong></p>
+                     <p><strong>{{ product.sell_price }} $</strong></p>
                      <span class="badge bg-warning text-dark">Скидка {{ product.discount }} %</span>
                  {% else %}
                      <p><strong>{{ product.price }} $</strong></p>

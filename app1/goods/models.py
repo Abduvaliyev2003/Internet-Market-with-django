@@ -25,3 +25,15 @@ class Products(models.Model):
         db_table = 'products'
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
+
+    def __str__(self):
+        return  f'{self.name} Quantity - {self.quantity}'
+
+    def display_id(self):
+        return f'{self.id:05}'
+
+    def sell_price(self):
+        if self.discount:
+            return round(self.price - self.price * self.discount/100, 2)
+
+        return self.price
