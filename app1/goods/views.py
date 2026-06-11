@@ -17,7 +17,8 @@ def catalog(request, category_slug=None, page=1):
             category__slug=category_slug
         )
     paginator = Paginator(goods, 3)
-    current_page = paginator.page(page)
+    page = request.GET.get('page', 1)
+    current_page = paginator.get_page(page)
 
     context = {
         'title': 'Home - О нас',
