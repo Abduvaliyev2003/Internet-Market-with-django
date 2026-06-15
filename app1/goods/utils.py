@@ -1,3 +1,4 @@
+from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 
 from goods.models import Products
@@ -14,4 +15,4 @@ def q_search(query):
     #     q_objects |= Q(description__icontains=token)
     #     q_objects |= Q(name__icontains=token)
 
-    return Products.objects.filter(description__search=query)
+    return Products.objects.annotate(search=SearchVector('name', 'description')).filter(search=query)
