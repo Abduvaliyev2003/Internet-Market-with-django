@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from users.forms import UserLoginForm
+from users.forms import UserLoginForm
 
 def login(request) -> HttpResponse:
+    from = UserLoginForm()
     context: dict[str, str] = {
         'title': 'Home - Авторизация'
     }
