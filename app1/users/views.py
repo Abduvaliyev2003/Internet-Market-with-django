@@ -1,7 +1,8 @@
-from django.contrib import auth
+from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from users.forms import UserLoginForm, UserRegisterForm
+from users.forms import UserLoginForm, UserRegisterForm, ProfileForm
 
 
 def login(request) -> HttpResponse:
@@ -13,6 +14,7 @@ def login(request) -> HttpResponse:
             user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)
+                messages.success(request, f"{username}, successfully logged in!")
                 return HttpResponseRedirect(reverse('main:index'))
     else:
         form = UserLoginForm()
@@ -31,6 +33,7 @@ def registration(request) -> HttpResponse:
             form.save()
             user = form.instance
             auth.login(request, user)
+            messages.success(request, f"{user.username}, successfully registrated in!")
             return HttpResponseRedirect(reverse('main:index'))
     else:
         form = UserRegisterForm()
@@ -42,14 +45,25 @@ def registration(request) -> HttpResponse:
     return render(request, 'users/registration.html', context)
 
 
+@login_required
 def profile(request) -> HttpResponse:
+    if request.method == 'POST':
+        form = ProfileForm(data=request.POST, instance=request.user, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, " successfully updated")
+            return HttpResponseRedirect(reverse('users:profile'))
+    else:
+        form = ProfileForm(instance=request.user)
     context: dict[str, str] = {
-        'title': 'Home - Кабинет'
+        'title': 'Home - Кабинет',
+        'form': form
     }
 
     return render(request, 'users/profile.html', context)
 
-
+@login_required
 def logout(request):
+    messages.success(request, f"{request.user.username}, log out")
     auth.logout(request)
     return redirect(reverse('main:index'))
