@@ -5,6 +5,11 @@ from users.models import User
 
 
 class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={"autofocus": True, 'class': 'form-control', 'placeholder': 'Username'}))
+    password = forms.CharField(
+        label='Password',
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'class': 'form-control', 'placeholder': 'Password'}))
     class Meta:
         model = User
-        fields = ('email', 'password')
+        fields = ['email', 'password']
