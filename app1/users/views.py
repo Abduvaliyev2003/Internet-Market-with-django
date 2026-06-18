@@ -1,7 +1,8 @@
 from django.contrib import auth
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from users.forms import UserLoginForm
+from users.forms import UserLoginForm, UserRegisterForm
+
 
 def login(request) -> HttpResponse:
     if request.method == 'POST':
@@ -14,16 +15,26 @@ def login(request) -> HttpResponse:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('main:index'))
     else:
-        from = UserLoginForm()
+        form = UserLoginForm()
     context: dict[str, str] = {
-        'title': 'Home - Авторизация'
-        'form': from,
+        'title': 'Home - Авторизация',
+        'form': form
     }
 
     return render(request, 'users/login.html', context)
 
 
 def registration(request) -> HttpResponse:
+    if request.method == 'POST':
+        form = UserRegisterForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.instance
+            auth.login(request, user)
+            return HttpResponseRedirect(reverse('main:index'))
+    else:
+        form = UserRegisterForm()
+
     context: dict[str, str] = {
         'title': 'Home - Регистрация'
     }
@@ -40,4 +51,5 @@ def profile(request) -> HttpResponse:
 
 
 def logout(request):
-    pass
+    auth.logout(request)
+    return redirect(reverse('main:index'))
