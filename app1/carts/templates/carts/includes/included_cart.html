@@ -1,0 +1,58 @@
+{% load static %}
+
+{% for cart in carts %}
+<div class="card mb-3 cart-card">
+    <div class="card-header d-flex align-items-center">
+        <h6 class="card-title mb-0 flex-grow-1">{{ cart.product.name }}</h6>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="row text-center align-items-center">
+                <div class="col-4 p-1">
+                    <div class="input-group input-group-sm">
+                        <button type="button"
+                                class="btn btn-outline-light btn-sm decrement"
+                                data-cart-id="{{ cart.id }}"
+                                data-cart-change-url="{% url 'carts:cart_change' %}">−</button>
+                        <input type="text" class="form-control number text-center"
+                               value="{{ cart.quantity }}" readonly
+                               style="background: transparent; color: #fff; border-color: rgba(255,255,255,0.2);">
+                        <button type="button"
+                                class="btn btn-outline-light btn-sm increment"
+                                data-cart-id="{{ cart.id }}"
+                                data-cart-change-url="{% url 'carts:cart_change' %}">+</button>
+                    </div>
+                </div>
+                <div class="col-3 p-1">
+                    <small class="text-muted">× {{ cart.product.sell_price }} =</small>
+                </div>
+                <div class="col-3 p-1">
+                    <strong class="text-accent">{{ cart.products_price }} $</strong>
+                </div>
+                <div class="col-2 p-1">
+                    <a href="{% url 'carts:cart_remove' %}"
+                       class="remove-from-cart text-danger"
+                       data-cart-id="{{ cart.id }}">
+                        <img src="{% static 'deps/icons/trash3-fill.svg' %}"
+                             alt="Remove" width="16" height="16"
+                             style="filter: invert(35%) sepia(90%) saturate(1000%) hue-rotate(340deg);">
+                    </a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+{% empty %}
+<div class="text-center py-4">
+    <p class="text-muted mb-0">Корзина пуста</p>
+</div>
+{% endfor %}
+
+{% if carts %}
+<div class="card cart-total-card">
+    <div class="card-footer text-center">
+        <p class="mb-1">Итого <strong>{{ cart_count }}</strong> товар(а) на сумму</p>
+        <h4 class="mb-0"><strong class="text-accent">{{ cart_total_price }} $</strong></h4>
+    </div>
+</div>
+{% endif %}

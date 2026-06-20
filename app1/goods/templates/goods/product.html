@@ -2,54 +2,95 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="card mb-4 custom-shadow">
-        <div class="row">
-            <div class="col-md-4">
-                {% if product.image %}
-        <img src="{{ product.image.url }}"
-             class="img-fluid"
-             alt="{{ product.name }}">
-    {% else %}
-        <img src="{% static "deps/images/Not found image.png" %}"
-             class="img-fluid"
-             alt="No image">
-    {% endif %}
-            </div>
-            <div class="col-md-4 ">
-                <p class="product_id mt-3">id: {{ product.display_id }}</p>
-            </div>
-            <div class="modal fade" id="imageModal1" tabindex="-1"
-                aria-labelledby="imageModal1Label" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="imageModal1Label">{{ product.name }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Закрыть"></button>
-                        </div>
-                        <div class="modal-body">
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb mb-0" style="font-size: 0.8125rem;">
+                <li class="breadcrumb-item"><a href="{% url 'main:index' %}" style="color: var(--text-tertiary);">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'catalog:index' 'all' %}" style="color: var(--text-tertiary);">Каталог</a></li>
+                <li class="breadcrumb-item active text-accent">{{ product.name }}</li>
+            </ol>
+        </nav>
 
-                {% if product.image %}
-        <img src="{{ product.image.url }}"
-             class="img-fluid"
-             alt="{{ product.name }}">
-    {% else %}
-        <img src="{% static "deps/images/Not found image.png" %}"
-             class="img-fluid"
-             alt="No image">
-                             {% endif %}
+        <div class="glass-card p-4 p-lg-5 animate-fade-in" style="border-radius: var(--radius-xl);">
+            <div class="row g-4 g-lg-5">
+                <!-- Image -->
+                <div class="col-lg-6">
+                    <div class="product-gallery d-flex align-items-center justify-content-center position-relative" style="min-height: 380px; border-radius: var(--radius-lg); overflow: hidden;">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="img-fluid object-fit-contain hover-zoom cursor-pointer" alt="{{ product.name }}" data-bs-toggle="modal" data-bs-target="#imageModal" style="max-height: 380px;">
+                        {% else %}
+                        <img src="{% static 'deps/images/Not found image.png' %}" class="img-fluid object-fit-contain" alt="No image" style="max-height: 380px;">
+                        {% endif %}
+
+                        {% if product.discount %}
+                        <span class="badge bg-discount position-absolute top-0 start-0 m-3">−{{ product.discount|floatformat:0 }}%</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="col-lg-6 d-flex flex-column">
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span style="color: var(--text-tertiary); font-size: 0.8125rem;">ID: {{ product.display_id }}</span>
+                            <span class="{% if product.quantity > 0 %}bg-success-glow{% else %}bg-danger-glow{% endif %} px-3 py-1" style="border-radius:99px; font-size:0.75rem; font-weight:600;">
+                                {% if product.quantity > 0 %}В наличии · {{ product.quantity }} шт.{% else %}Нет в наличии{% endif %}
+                            </span>
                         </div>
+
+                        <h2 class="fw-bold mb-3" style="letter-spacing:-0.02em;">{{ product.name }}</h2>
+
+                        <!-- Price -->
+                        <div class="d-flex align-items-baseline gap-3 mb-4">
+                            {% if product.discount %}
+                            <span style="color: var(--text-tertiary); text-decoration: line-through; font-size: 1.1rem;">{{ product.price }} $</span>
+                            <span class="text-accent fw-bold" style="font-size: 2rem; letter-spacing:-0.02em;">{{ product.sell_price }} $</span>
+                            {% else %}
+                            <span class="text-accent fw-bold" style="font-size: 2rem; letter-spacing:-0.02em;">{{ product.price }} $</span>
+                            {% endif %}
+                        </div>
+
+                        <hr style="border-color: var(--border);">
+
+                        <h6 class="fw-semibold mb-2" style="color: var(--text-secondary);">Описание</h6>
+                        <p style="color: var(--text-tertiary); font-size: 0.875rem; line-height: 1.7;">
+                            {{ product.description|default:"Описание временно отсутствует." }}
+                        </p>
+                    </div>
+
+                    <!-- Action -->
+                    <div class="mt-4">
+                        {% if product.quantity > 0 %}
+                        <a href="{% url 'carts:cart_add' %}" class="btn btn-gradient w-100 py-3 fw-bold add-to-cart" data-product-id="{{ product.id }}">
+                            {% csrf_token %}
+                            Добавить в корзину
+                        </a>
+                        {% else %}
+                        <button class="btn btn-outline-accent w-100 py-3 fw-bold" disabled>Нет в наличии</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card-body">
-            <p class="card-text">Цена: <strong>{{ product.sell_price }} $</strong></p>
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text">{{ product.description }}</p>
-            <a href="#" class="btn btn-dark add-to-cart">Добавить в корзину</a>
+    </div>
+</div>
+
+<!-- Image Modal -->
+{% if product.image %}
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content glass-modal">
+            <div class="modal-header" style="border-bottom: 1px solid var(--border);">
+                <h6 class="modal-title fw-semibold" style="color: var(--text-primary);">{{ product.name }}</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-0" style="background: var(--bg-elevated);">
+                <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+            </div>
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock content %}

@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+        <div class="glass-card p-4 p-md-5 mb-5 rounded custom-shadow animate-fade-in">
+            <h2 class="text-center mb-4 text-gradient">Оформление заказа</h2>
+            
+            <form action="{% url 'orders:create_order' %}" method="post" id="order-form">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger bg-danger-subtle border-danger text-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class="row">
+                    <!-- Личные данные -->
+                    <div class="col-12 mb-4">
+                        <h4 class="text-accent border-bottom border-secondary pb-2">1. Личные данные</h4>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="id_first_name" class="form-label text-light">Имя*</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="id_last_name" class="form-label text-light">Фамилия*</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label for="id_phone_number" class="form-label text-light">Номер телефона*</label>
+                        {{ form.phone_number }}
+                        <div class="form-text text-muted">Формат: 10-12 цифр без пробелов и знаков (например, 998901234567)</div>
+                        {% if form.phone_number.errors %}
+                            <div class="text-danger small mt-1">{{ form.phone_number.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Доставка -->
+                    <div class="col-12 mb-4 mt-3">
+                        <h4 class="text-accent border-bottom border-secondary pb-2">2. Способ получения</h4>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="d-flex gap-4">
+                            {% for radio in form.requires_delivery %}
+                                <div class="form-check custom-radio">
+                                    {{ radio.tag }}
+                                    <label class="form-check-label text-light" for="{{ radio.id_for_label }}">
+                                        {{ radio.choice_label }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.requires_delivery.errors %}
+                            <div class="text-danger small mt-1">{{ form.requires_delivery.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12 mb-3" id="deliveryAddressField" style="display: none;">
+                        <label for="id_delivery_address" class="form-label text-light">Адрес доставки*</label>
+                        {{ form.delivery_address }}
+                        {% if form.delivery_address.errors %}
+                            <div class="text-danger small mt-1">{{ form.delivery_address.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Оплата -->
+                    <div class="col-12 mb-4 mt-3">
+                        <h4 class="text-accent border-bottom border-secondary pb-2">3. Способ оплаты</h4>
+                    </div>
+
+                    <div class="col-12 mb-4">
+                        <div class="d-flex flex-column gap-2">
+                            {% for radio in form.payment_on_get %}
+                                <div class="form-check custom-radio">
+                                    {{ radio.tag }}
+                                    <label class="form-check-label text-light" for="{{ radio.id_for_label }}">
+                                        {{ radio.choice_label }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.payment_on_get.errors %}
+                            <div class="text-danger small mt-1">{{ form.payment_on_get.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-gradient btn-lg px-5 py-3 w-100 w-md-auto font-weight-bold">
+                        Подтвердить заказ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,173 +1,82 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css %}
-<link rel="stylesheet" href="{% static 'deps/css/my_footer_css.css' %}">
-{% endblock css  %}
 
-{%  block content %}
-<h1 class="mt-5 pt-5"><strong>{{content}}</strong></h1>
-{% endblock content %}
-{%  block footer %}
-    <footer class="py-4 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Home Python Hub Studio 2023</p>
-        </div>
-    </footer>
-{% endblock footer %}
-
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-            <div class="container">
-                <a class="navbar-brand" href="index.html">Home</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown ">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Информация
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item  text-white" href="#">Доставка и оплата</a></li>
-                                <li><a class="dropdown-item  text-white" href="#">Контактная информация</a></li>
-                                <li><a class="dropdown-item  text-white" href="#">Про нас</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  text-white" href="carts/cart.html">Корзина</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  text-white" href="users/login.html">Войти</a>
-                        </li>
-                        <li class="nav-item dropdown ">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Мой профиль
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
-                                <li><a class="dropdown-item  text-white" href="users/profile.html">Личный кабинет</a></li>
-                                <li><a class="dropdown-item  text-white" href="#">Админ панель</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item  text-white" href="#">Выйти</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
-                    </form>
-                </div>
+{% block content %}
+<!-- ═══ HERO ═══ -->
+<div class="hero-section p-4 p-md-5 mb-5 animate-fade-in">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <span class="bg-accent-glow px-3 py-1" style="border-radius:99px; font-size:0.75rem; font-weight:600;">Новая коллекция</span>
             </div>
-        </nav>
-    </header>
-    <section>
-        <div class="container">
-            <div class="row mt-1 position-fixed z-3">
-                <div class="dropdown mb-2">
-                    <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Каталог
-                        <img class="mx-1" src="{% static 'deps/icons/grid-fill.svg' %}" alt="Catalog Icon" width="16" height="16">
-                    </button>
-                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
-                        <li><a class="dropdown-item text-white" href="goods/catalog.html">Все товары</a></li>
-                        <li><a class="dropdown-item text-white" href="goods/catalog.html">Кухня</a></li>
-                        <li><a class="dropdown-item text-white" href="goods/catalog.html">Спальня</a></li>
-                        <li><a class="dropdown-item text-white" href="goods/catalog.html">Гостинная</a></li>
-                        <li><a class="dropdown-item text-white" href="goods/catalog.html">Офис</a></li>
-                        <li><a class="dropdown-item text-white" href="goods/catalog.html">Фурнитура</a></li>
-                        <li><a class="dropdown-item text-white" href="goods/catalog.html">Декор</a></li>
-                    </ul>
+            <h1 class="display-5 fw-bold mb-3" style="letter-spacing:-0.03em; line-height:1.1;">
+                Создайте уют<br>
+                <span class="text-gradient">идеального дома</span>
+            </h1>
+            <p class="mb-4" style="color: var(--text-secondary); font-size: 1.05rem; max-width: 520px; line-height: 1.7;">
+                Премиальная мебель от лучших дизайнеров. Каждый предмет — это сочетание комфорта, стиля и качества.
+            </p>
+            <div class="d-flex gap-3 flex-wrap">
+                <a href="{% url 'catalog:index' 'all' %}" class="btn btn-gradient px-4 py-2">
+                    Смотреть каталог →
+                </a>
+                <a href="{% url 'main:about' %}" class="btn btn-outline-accent px-4 py-2">
+                    О компании
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4 d-none d-lg-flex justify-content-center">
+            <div style="width:200px; height:200px; border-radius:50%; background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%); filter: blur(40px);"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ FEATURES ═══ -->
+<div class="row g-3 mb-5">
+    <div class="col-md-4">
+        <div class="glass-card p-4 h-100 hover-lift" style="border-radius: var(--radius-lg);">
+            <div class="d-flex align-items-start gap-3">
+                <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-3" style="width:44px; height:44px; background: var(--accent-subtle);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--accent)" viewBox="0 0 16 16">
+                        <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7z"/>
+                    </svg>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
-                        aria-expanded="false">
-                        <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg' %}" alt="Catalog Icon" width="24" height="24">
-                        <span id="goods-in-cart-count">0</span>
-                    </button>
-                </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <h3 class="text-center mb-4">Корзина</h3>
-                                <div class="container" id="cart-items-container">
-                                    <div class="card mb-3 text-bg-light shadow-lg">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Товар</h5>
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">
-                                                <div class="row text-center">
-                                                    <div class="col p-0">
-                                                        <div class="input-group">
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-dark btn-sm decrement"
-                                                                    data-cart-id="" data-cart-change-url="">-</button>
-                                                            </span>
-                                                            <input type="text" class="form-control number" value="1" readonly>
-                                                            <span class="input-group-btn">
-                                                                <button type="button" class="btn btn-dark btn-sm increment"
-                                                                    data-cart-id="" data-cart-change-url="">+</button>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col p-0">
-                                                        <p>x 100.00 = </p>
-                                                    </div>
-                                                    <div class="col p-0"><strong>100.00 $</strong></div>
-                                                    <div class="col p-0">
-                                                        <a href="#" class="remove-from-cart" data-cart-id="">
-                                                            <img class="mx-1" src="{% static 'deps/icons/trash3-fill.svg' %}"
-                                                                alt="Catalog Icon" width="16" height="16">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card mb-3 shadow-lg">
-                                        <div class="card-footer">
-                                            <p class="float-left">Итого <strong>1</strong> товар(а) на сумму</p>
-                                            <h4 class="float-left"><strong>100.00 $</strong></h4>
-                                        </div>
-                                    </div>
-                                    </div>
-                                <a class="btn btn-dark" href="orders/create_order.html">
-                                    Оформить заказ
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-        </div>
-        <div class="container">
-            <div class="row mt-1">
-                <div class="col-lg-2">
-                    </div>
-                <div class="col-lg-10">
-
+                    <h6 class="fw-semibold mb-1">Быстрая доставка</h6>
+                    <p class="mb-0" style="color: var(--text-tertiary); font-size: 0.8125rem; line-height: 1.5;">Бесплатная доставка и сборка по городу в течение 24 часов.</p>
                 </div>
             </div>
         </div>
-    </section>
-    <script src="{% static 'deps/js/jquery/jquery-3.7.0.min.js' %}"></script>
-    <script src="{% static 'deps/js/jquery-events.js' %}"></script>
-    <script src="{% static 'deps/js/jquery-ajax.js' %}"></script>
-    <script src="{% static 'deps/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
-</body>
-
-</html>
+    </div>
+    <div class="col-md-4">
+        <div class="glass-card p-4 h-100 hover-lift" style="border-radius: var(--radius-lg);">
+            <div class="d-flex align-items-start gap-3">
+                <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-3" style="width:44px; height:44px; background: var(--accent-subtle);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--accent)" viewBox="0 0 16 16">
+                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h6 class="fw-semibold mb-1">Высшее качество</h6>
+                    <p class="mb-0" style="color: var(--text-tertiary); font-size: 0.8125rem; line-height: 1.5;">Экологичные материалы и гарантия 5 лет на всю мебель.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="glass-card p-4 h-100 hover-lift" style="border-radius: var(--radius-lg);">
+            <div class="d-flex align-items-start gap-3">
+                <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-3" style="width:44px; height:44px; background: var(--accent-subtle);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--accent)" viewBox="0 0 16 16">
+                        <path d="M1 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm9.5 5.5a.5.5 0 0 0-1 0V9H8a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V10H12a.5.5 0 0 0 0-1h-1.5V7.5z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h6 class="fw-semibold mb-1">Лучшие цены</h6>
+                    <p class="mb-0" style="color: var(--text-tertiary); font-size: 0.8125rem; line-height: 1.5;">Прямые поставки от производителей — без посредников.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,35 +1,47 @@
-// Когда html документ готов (прорисован)
 $(document).ready(function () {
-    // Берем из разметки элемент по id - оповещения от django
+    // Hide notification alert after 7 seconds
     var notification = $('#notification');
-    // И через 7 сек. убираем
     if (notification.length > 0) {
         setTimeout(function () {
             notification.alert('close');
         }, 7000);
     }
 
-    // При клике по значку корзины открываем всплывающее(модальное) окно
-    $('#modalButton').click(function () {
+    // Modal Cart open / close handlers
+    function openCartModal() {
         $('#exampleModal').appendTo('body');
-
         $('#exampleModal').modal('show');
+    }
+
+    $('#modalButton').click(function () {
+        openCartModal();
     });
 
-    // Собыите клик по кнопке закрыть окна корзины
+    $('#modalButtonMobile').click(function () {
+        openCartModal();
+    });
+
     $('#exampleModal .btn-close').click(function () {
         $('#exampleModal').modal('hide');
     });
 
-    // Обработчик события радиокнопки выбора способа доставки
-    $("input[name='requires_delivery']").change(function() {
-        var selectedValue = $(this).val();
-        // Скрываем или отображаем input ввода адреса доставки
+    // Toggle delivery address field based on selected shipping type
+    function toggleDeliveryAddress() {
+        var selectedValue = $("input[name='requires_delivery']:checked").val();
         if (selectedValue === "1") {
-            $("#deliveryAddressField").show();
+            $("#deliveryAddressField").slideDown(300);
         } else {
-            $("#deliveryAddressField").hide();
+            $("#deliveryAddressField").slideUp(300);
         }
-    });
+    }
 
+    // Initial check on page load
+    if ($("input[name='requires_delivery']").length > 0) {
+        toggleDeliveryAddress();
+    }
+
+    // On change event
+    $(document).on("change", "input[name='requires_delivery']", function () {
+        toggleDeliveryAddress();
+    });
 });

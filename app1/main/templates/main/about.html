@@ -1,19 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css %}
-<link rel="stylesheet" href="{% static 'deps/css/my_footer_css.css' %}">
-{% endblock css  %}
 
-{%  block content %}
-  <div class="mt-5 pt-5 bg-white custom-shadow rounded-1 align-content-center">
-   <h2 class="mt-0"><strong>{{content}}</strong></h2>
-   <p class="m-0">{{ text_on_page }}</p>
-    </div>
-{% endblock content %}
-{%  block footer %}
-    <footer class="py-4 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Home Python Hub Studio 2023</p>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="glass-card p-4 p-md-5 mb-5 rounded-4 custom-shadow animate-fade-in text-light border-0">
+            <h2 class="mb-4 text-gradient font-weight-bold text-center">{{ content }}</h2>
+            
+            <div class="row align-items-center g-4">
+                <div class="col-md-6">
+                    <p class="lead text-light mb-3">
+                        Мы создаем пространство, в котором хочется жить.
+                    </p>
+                    <p class="text-muted">
+                        {{ text_on_page }}
+                    </p>
+                    <p class="text-muted">
+                        Наш интернет-магазин предлагает тщательно отобранную мебель, которая идеально сочетает в себе эргономику, эстетику и функциональность. Мы верим, что каждый предмет интерьера должен приносить радость и комфорт.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 border border-secondary border-dashed rounded-3 text-center bg-dark-input">
+                        <h4 class="text-accent mb-2">Наши достижения</h4>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="p-2 border border-secondary rounded">
+                                    <h3 class="text-white mb-0 font-weight-bold">10k+</h3>
+                                    <small class="text-muted">Заказов</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-2 border border-secondary rounded">
+                                    <h3 class="text-white mb-0 font-weight-bold">99%</h3>
+                                    <small class="text-muted">Отзывов</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
-{% endblock footer %}
+    </div>
+</div>
+{% endblock content %}

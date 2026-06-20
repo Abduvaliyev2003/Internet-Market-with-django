@@ -2,6 +2,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from users.forms import UserLoginForm, UserRegisterForm, ProfileForm
 
 
@@ -39,7 +40,8 @@ def registration(request) -> HttpResponse:
         form = UserRegisterForm()
 
     context: dict[str, str] = {
-        'title': 'Home - Регистрация'
+        'title': 'Home - Регистрация',
+        'form': form,
     }
 
     return render(request, 'users/registration.html', context)
@@ -47,17 +49,22 @@ def registration(request) -> HttpResponse:
 
 @login_required
 def profile(request) -> HttpResponse:
+    from orders.models import Order
     if request.method == 'POST':
         form = ProfileForm(data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, " successfully updated")
+            messages.success(request, "Профиль успешно обновлен")
             return HttpResponseRedirect(reverse('users:profile'))
     else:
         form = ProfileForm(instance=request.user)
-    context: dict[str, str] = {
+        
+    orders = Order.objects.filter(user=request.user).prefetch_related('orderitem_set').order_by('-id')
+    
+    context = {
         'title': 'Home - Кабинет',
-        'form': form
+        'form': form,
+        'orders': orders,
     }
 
     return render(request, 'users/profile.html', context)

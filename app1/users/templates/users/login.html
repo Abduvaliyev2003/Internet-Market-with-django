@@ -2,89 +2,77 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6 bg-white p-4 mb-4 mx-3 rounded custom-shadow">
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="glass-card p-4 p-md-5 mb-5 rounded-4 custom-shadow animate-fade-in text-light border-0">
+            <h2 class="text-center mb-4 text-gradient font-weight-bold">Авторизация</h2>
 
-                <h2 class="text-center mb-4">Авторизация</h2>
-
-                <form method="post" action="{% url "users:login" %}" >
-                    {% csrf_token %}
+            <form method="post" action="{% url 'users:login' %}">
+                {% csrf_token %}
+                
                 {% if form.non_field_errors %}
-                <p>{{ form.non_field_errors}}</p>
+                    <div class="alert alert-danger bg-danger-subtle border-danger text-danger mb-3">
+                        {{ form.non_field_errors }}
+                    </div>
                 {% endif %}
 
-<div class="mb-3">
-    <label for="id_username" class="form-label">Имя пользователя</label>
-    <input type="text"
-       class="form-control"
-       value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
-       name="username"
-       id="id_username"
-       placeholder="Введите ваш имя">
-</div>
-
-<div class="mb-3">
-    <label for="id_password" class="form-label">Пароль</label>
-    <input type="password"
-           class="form-control"
-           name="password"
-           id="id_password"
-           placeholder="Введите ваш пароль">
-</div>
-                    <button type="submit" class="btn btn-dark w-100">
-                        Войти
-                    </button>
-                </form>
-
-                <div class="mt-3 text-center">
-                    <a href="#">Забыли пароль?</a>
-                    |
-                    <a href="{% url 'users:registration' %}">
-                        Создать аккаунт
-                    </a>
+                <div class="mb-4">
+                    <label for="id_username" class="form-label text-light">Имя пользователя</label>
+                    <input type="text"
+                           class="form-control bg-dark-input border-secondary text-light"
+                           value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
+                           name="username"
+                           id="id_username"
+                           placeholder="Введите имя пользователя">
+                    {% if form.username.errors %}
+                        <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+                    {% endif %}
                 </div>
 
-                <hr>
+                <div class="mb-4">
+                    <label for="id_password" class="form-label text-light">Пароль</label>
+                    <input type="password"
+                           class="form-control bg-dark-input border-secondary text-light"
+                           name="password"
+                           id="id_password"
+                           placeholder="Введите ваш пароль">
+                    {% if form.password.errors %}
+                        <div class="text-danger small mt-1">{{ form.password.errors }}</div>
+                    {% endif %}
+                </div>
 
-                <div class="text-center">
-                    <p>Или авторизуйтесь через:</p>
+                <button type="submit" class="btn btn-gradient w-100 py-2.5 font-weight-bold mb-3">
+                    Войти
+                </button>
+            </form>
 
-                    <a href="#" class="btn btn-dark me-2">
-                        <img
-                            class="me-1"
-                            src="{% static 'deps/icons/google.svg' %}"
-                            alt="Google"
-                            width="16"
-                            height="16"
-                        >
+            <div class="text-center mt-3 small">
+                <a href="#" class="text-muted text-decoration-none hover-accent me-2">Забыли пароль?</a>
+                <span class="text-muted">|</span>
+                <a href="{% url 'users:registration' %}" class="text-accent text-decoration-none hover-underline ms-2">Создать аккаунт</a>
+            </div>
+
+            <hr class="border-secondary my-4">
+
+            <div class="text-center">
+                <p class="text-muted small mb-3">Или войдите с помощью:</p>
+
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="#" class="btn btn-outline-light d-flex align-items-center gap-2 px-3 py-2 small">
+                        <img src="{% static 'deps/icons/google.svg' %}" alt="Google" width="16" height="16">
                         Google
                     </a>
 
-                    <a href="#" class="btn btn-dark me-2">
-                        <img
-                            class="me-1"
-                            src="{% static 'deps/icons/facebook.svg' %}"
-                            alt="Facebook"
-                            width="16"
-                            height="16"
-                        >
+                    <a href="#" class="btn btn-outline-light d-flex align-items-center gap-2 px-3 py-2 small">
+                        <img src="{% static 'deps/icons/facebook.svg' %}" alt="Facebook" width="16" height="16">
                         Facebook
                     </a>
 
-                    <a href="#" class="btn btn-dark">
-                        <img
-                            class="me-1"
-                            src="{% static 'deps/icons/github.svg' %}"
-                            alt="GitHub"
-                            width="16"
-                            height="16"
-                        >
+                    <a href="#" class="btn btn-outline-light d-flex align-items-center gap-2 px-3 py-2 small">
+                        <img src="{% static 'deps/icons/github.svg' %}" alt="GitHub" width="16" height="16" style="filter: invert(1);">
                         GitHub
                     </a>
                 </div>
-
             </div>
         </div>
     </div>

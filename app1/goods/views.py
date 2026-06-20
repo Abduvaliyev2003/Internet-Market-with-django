@@ -28,6 +28,8 @@ def catalog(request, category_slug=None, page=1):
 
     if order_by and order_by != 'default':
         goods = goods.order_by(order_by)
+    else:
+        goods = goods.order_by('-id')
 
     paginator = Paginator(goods, 2)
     page = request.GET.get('page', 1)
